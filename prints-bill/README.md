@@ -12,9 +12,9 @@
 plays.json
 ```json 
 {
-   "hamlet":{"name":"Hamlet","type":"tragedy"},
-   "as-like":{"name":"As You Like It","type":"comedy"},
-   "othello":{"name":"Othello","type":"tragedy"}
+   "hamlet":{"name":"Hamlet","kind":"tragedy"},
+   "as-like":{"name":"As You Like It","kind":"comedy"},
+   "othello":{"name":"Othello","kind":"tragedy"}
 }
 ```
 

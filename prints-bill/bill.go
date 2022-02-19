@@ -54,6 +54,16 @@ func amountFor(plays Plays, perf Performance) (amount float64) {
 	return amount
 }
 
+func volumeCreditsFor(plays Plays, perf Performance) (credits float64) {
+	credits += math.Max(float64(perf.Audience-30), 0)
+	// add extra credit for every ten comedy attendees
+	if "comedy" == playKind(playFor(plays, perf)) {
+		credits += math.Floor(float64(perf.Audience / 5))
+	}
+
+	return credits
+}
+
 func statement(invoice Invoice, plays Plays) string {
 	totalAmount := 0.0
 	volumeCredits := 0.0
@@ -63,11 +73,7 @@ func statement(invoice Invoice, plays Plays) string {
 		totalAmount += amountFor(plays, perf)
 
 		// add volume credits
-		volumeCredits += math.Max(float64(perf.Audience-30), 0)
-		// add extra credit for every ten comedy attendees
-		if "comedy" == playKind(playFor(plays, perf)) {
-			volumeCredits += math.Floor(float64(perf.Audience / 5))
-		}
+		volumeCredits += volumeCreditsFor(plays, perf)
 
 		// print line for this order
 		result += fmt.Sprintf("  %s: $%.2f (%d seats)\n", playName(playFor(plays, perf)), amountFor(plays, perf)/100, perf.Audience)

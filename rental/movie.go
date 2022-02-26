@@ -1,8 +1,10 @@
 package rental
 
-const CHILDRENS = 2
-const NEW_RELEASE = 1
-const REGULAR = 0
+const (
+	Childrens = iota
+	NewRelease
+	Regular
+)
 
 type Movie struct {
 	title     string

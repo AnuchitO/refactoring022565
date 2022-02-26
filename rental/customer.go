@@ -17,18 +17,33 @@ func NewCustomer(name string) Customer {
 func (c Customer) Name() string {
 	return c.name
 }
+
 func (c Customer) Statement() string {
-	totalAmount := 0.0
+	result := fmt.Sprintf("Rental Record for %v\n", c.Name())
+	for _, r := range c.rentals {
+		title := r.GetMovie().Title()
+		charge := r.GetMovie().getCharge(r.GetDaysRented())
+		result += fmt.Sprintf("\t%v\t%.1f\n", title, charge)
+	}
+	result += fmt.Sprintf("Amount owed is %.1f\n", TotalAmount(c))
+	result += fmt.Sprintf("You earned %v frequent renter points", TotalFrequentRenterPoints(c))
+	return result
+}
+
+func TotalFrequentRenterPoints(c Customer) int {
 	frequentRenterPoints := 0
-	result := fmt.Sprintf("%v%v%v", "Rental Record for ", c.Name(), "\n")
 	for _, r := range c.rentals {
 		frequentRenterPoints += r.getFrequentRenterPoints()
-		result += fmt.Sprintf("%v%v%v%.1f%v", "\t", r.GetMovie().Title(), "\t", r.getCharge(), "\n")
-		totalAmount += r.getCharge()
 	}
-	result += fmt.Sprintf("%v%.1f%v", "Amount owed is ", totalAmount, "\n")
-	result += fmt.Sprintf("%v%v%v", "You earned ", frequentRenterPoints, " frequent renter points")
-	return result
+	return frequentRenterPoints
+}
+
+func TotalAmount(c Customer) float64 {
+	totalAmount := 0.0
+	for _, r := range c.rentals {
+		totalAmount += r.GetMovie().getCharge(r.GetDaysRented())
+	}
+	return totalAmount
 }
 
 func (r Rental) getFrequentRenterPoints() int {
@@ -38,19 +53,19 @@ func (r Rental) getFrequentRenterPoints() int {
 	return 1
 }
 
-func (r Rental) getCharge() (result float64) {
-	switch r.GetMovie().GetPriceCode() {
+func (m Movie) getCharge(daysRented int) (result float64) {
+	switch m.GetPriceCode() {
 	case REGULAR:
 		result += 2
-		if r.GetDaysRented() > 2 {
-			result += float64(r.GetDaysRented()-2) * 1.5
+		if daysRented > 2 {
+			result += float64(daysRented-2) * 1.5
 		}
 	case NEW_RELEASE:
-		result += float64(r.GetDaysRented()) * 3.0
+		result += float64(daysRented) * 3.0
 	case CHILDRENS:
 		result += 1.5
-		if r.GetDaysRented() > 3 {
-			result += float64(r.GetDaysRented()-3) * 1.5
+		if daysRented > 3 {
+			result += float64(daysRented-3) * 1.5
 		}
 	}
 	return result

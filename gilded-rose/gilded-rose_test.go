@@ -20,6 +20,7 @@ func Test_Foo(t *testing.T) {
 		{name: "#6", inputs: []*Item{{name: "Backstage passes to a TAFKAL80ETC concert", sellIn: 15, quality: 1}}, outputs: []*Item{{name: "Backstage passes to a TAFKAL80ETC concert", sellIn: 14, quality: 2}}},
 		{name: "#7", inputs: []*Item{{name: "Backstage passes to a TAFKAL80ETC concert", sellIn: 10, quality: 49}}, outputs: []*Item{{name: "Backstage passes to a TAFKAL80ETC concert", sellIn: 9, quality: 50}}},
 		{name: "#8", inputs: []*Item{{name: "Backstage passes to a TAFKAL80ETC concert", sellIn: 5, quality: 49}}, outputs: []*Item{{name: "Backstage passes to a TAFKAL80ETC concert", sellIn: 4, quality: 50}}},
+		{name: "#9", inputs: []*Item{{name: "Backstage passes to a TAFKAL80ETC concert", sellIn: 10, quality: 48}}, outputs: []*Item{{name: "Backstage passes to a TAFKAL80ETC concert", sellIn: 9, quality: 50}}},
 	}
 
 	for _, c := range cases {

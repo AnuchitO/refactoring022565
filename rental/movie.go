@@ -5,22 +5,19 @@ const NEW_RELEASE = 1
 const REGULAR = 0
 
 type Movie struct {
-	_title     string
-	_priceCode int
+	title     string
+	priceCode int
 }
 
-func NewMovie(title string, priceCode int) (rcvr *Movie) {
-	rcvr = &Movie{}
-	rcvr._title = title
-	rcvr._priceCode = priceCode
-	return
+func NewMovie(title string, priceCode int) (m Movie) {
+	return Movie{
+		title:     title,
+		priceCode: priceCode,
+	}
 }
-func (rcvr *Movie) GetPriceCode() int {
-	return rcvr._priceCode
+func (m Movie) GetPriceCode() int {
+	return m.priceCode
 }
-func (rcvr *Movie) GetTitle() string {
-	return rcvr._title
-}
-func (rcvr *Movie) SetPriceCode(arg int) {
-	rcvr._priceCode = arg
+func (m Movie) Title() string {
+	return m.title
 }
